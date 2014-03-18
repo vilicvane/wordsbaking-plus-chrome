@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html ng-app="popup" ng-csp>
+<head>
+    <title>Wordsloop +</title>
+    <link href="main.min.css" rel="stylesheet" />
+    <link href="popup.min.css" rel="stylesheet" />
+    <link href="angular-csp.css" rel="stylesheet" />
+    <script src="jquery.min.js"></script>
+    <script src="langs.min.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="angular-route.min.js"></script>
+    <script src="settings.min.js"></script>
+    <script src="common.min.js"></script>
+    <script src="popup.min.js"></script>
+</head>
+<body ng-controller="MainController">
+    <form id="input-wrapper" ng-submit="define()" >
+        <h1 id="wordsbaking-plus-title"><a href="http://vilic.info" target="_blank">{{lang.wordsbaking}}<span>+</span></a></h1>
+        <input id="phrase-input" ng-model="phrase" type="text" placeholder="{{lang.definePhrase}}..." />
+        <button id="define-button" type="submit">{{lang.define}}</button>
+    </form>
+    <!--<div id="description-wrapper" style="display: none;">
+        <p id="description">Wordsloop Plus is part of <a href="http://vilic.info" target="_blank">Wordsloop</a>.</p>
+    </div>-->
+    <div id="loading-wrapper" ng-show="status == Status.loading">{{lang.loading}}...</div>
+    <div id="definition-wrapper" ng-show="status == Status.ready">
+        <div id="headword-wrapper" class="wb-{{result.wordsbookStatus}}" ng-show="result.headword.beautified != undefined && !result.onlyTranslation(true)">
+            <h2 class="headword">
+                {{result.headword.beautified}}
+                <a class="audio" ng-show="result.phonetics.length > 1 && result.audio.us" ng-click="playAudio()"></a>
+            </h2>
+            <a class="wordsbook-button" title="{{result.wordsbookStatus == 'added' ? lang.removeFromWordsbook : result.wordsbookStatus == 'addable' ? lang.addToWordsbook : result.wordsbookStatus == 'setup' ? lang.setupAccount : ''}}"></a>
+            <div class="phonetic-wrapper">
+                <span class="phonetic" ng-show="result.phonetics.length">
+                    <span ng-repeat="phonetic in result.phonetics" title="{{result.phonetics.length > 1 ? phonetic.poss.join(', ') : ''}}">{{phonetic.text}}</span>
+                    <a class="audio" ng-show="result.phonetics.length == 1 && result.audio.us" ng-click="playAudio()"></a>
+                </span>
+            </div>
+            <ul class="tenses-wrapper comma-sep-list">
+                <li ng-repeat="tense in result.tenses"><span title="{{tense.labels.join(', ')}}">{{tense.text}}</span></li>
+            </ul>
+        </div>
+        <div ng-show="result.synonyms.length" class="definition-item">
+            <h3>
+                {{lang.synonyms}}
+            </h3>
+            <div class="definition-pos-item synonyms-item" ng-repeat="group in result.synonyms">
+                <span class="pos">{{group.pos}}</span>
+                <p clickable-words="group.items.join(', ')"></p>
+            </div>
+        </div>
+        <div ng-show="!result.definitions.hash[result.translation.to] && result.translation.text && result.translation.text != result.query" class="definition-item translation-item">
+            <h3>
+                {{lang.translation}}
+            </h3>
+            <p clickable-words="result.translation.text"></p>
+            <div class="translated-from" ng-show="result.translation.src && result.translation.src.indexOf('zh') < 0 && result.translation.src != 'en' && lang.langNames[result.translation.src]">{{lang.translatedFrom}} {{lang.langNames[result.translation.src]}}</div>
+        </div>
+        <div ng-repeat="def in result.definitions" class="definition-item">
+            <h3>
+                {{lang.definitionTitles[def.lang]}}
+            </h3>
+            <div class="definition-pos-item" ng-repeat="pos in def.poss">
+                <span class="pos">{{pos.pos}}</span>
+                <ul>
+                    <li clickable-words="meaning" ng-repeat="meaning in pos.meanings" ng-show="$index < settings.defaultMeaningsNumber || pos.showAll"></li>
+                </ul>
+                <a class="meanings-show-all meanings-show-all-{{pos.showAll}}" ng-show="pos.meanings.length > settings.defaultMeaningsNumber" ng-click="pos.showAll = !pos.showAll"></a>
+            </div>
+        </div>
+        <div ng-show="result.webDefinitions.length" class="definition-item web-definition-item">
+            <h3>
+                {{lang.webDefinitions}}
+            </h3>
+            <div class="definition-pos-item">
+                <ul>
+                    <li ng-repeat="item in result.webDefinitions" ng-show="$index < settings.defaultMeaningsNumber || result.webDefinitions.showAll">
+                        <p clickable-words="item.text"></p>
+                        <div class="referrer-link-wrapper"><a href="{{item.url}}" title="{{item.url}}" target="_blank">{{item.url}}</a></div>
+                    </li>
+                </ul>
+                <a class="meanings-show-all meanings-show-all-{{result.webDefinitions.showAll}}" ng-show="result.webDefinitions.meanings.length > settings.defaultMeaningsNumber" ng-click="result.webDefinitions.showAll = !result.webDefinitions.showAll"></a>
+            </div>
+        </div>
+        <div class="bing-copyright">
+            {{lang.poweredBy}}
+            <a class="bing-more-link" href="{{result.bingSearchUrl}}" target="_blank">{{lang.bingMore}}</a>
+        </div>
+    </div>
+    <div id="nothing-found-wrapper" ng-show="status == Status.nothing">
+        {{lang.nothingFound}}...
+    </div>
+    <div id="error-wrapper" ng-show="status == Status.error">
+        {{lang.errorLoading}}...
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿{
+    "manifest_version": 2,
+    "name": "词焙+",
+    "homepage_url": "http://wordsbaking.com/",
+    "version": "0.2.1",
+    "description": "\"词焙+\" 是 \"词焙背单词\" 的组成部分, 是一款方便好用的划词翻译插件, 同时也可以为词焙生词本添加生词.",
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "icons/19.png"
+        },
+        "default_popup": "popup.html"
+    },
+    "author": "VILIC VANE",
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "css": ["content.min.css"],
+            "js": ["jquery.min.js", "langs.min.js", "settings.min.js", "common.min.js", "content.min.js"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "background": {
+        "page": "background.html"
+    },
+    "options_page": "options.html",
+    "permissions": [
+        "http://*/",
+        "https://*/",
+        "storage"
+    ],
+	"web_accessible_resources": ["options.html"],
+    "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'",
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+D",
+                "mac": "MacCtrl+D"
+            }
+        }
+    }
+}

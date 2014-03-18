@@ -1,0 +1,294 @@
+﻿body {
+    margin: 10px;
+    width: 400px;
+}
+
+a {
+    color: #6694E0;
+}
+
+p {
+    margin: 0px;
+}
+
+#input-wrapper {
+    margin-bottom: 10px;
+}
+
+#wordsbaking-plus-title {
+    position: relative;
+    float: right;
+    top: 1px;
+    margin: 0px;
+    line-height: 28px;
+    font-size: 14px; color: #666666;
+}
+
+#wordsbaking-plus-title a {
+    text-decoration: none;
+    color: #666666;
+}
+
+#wordsbaking-plus-title a span {
+    position: relative;
+    top: -4px; left: 0px;
+    color: #6694E0;
+}
+
+#phrase-input {
+    width: 180px;
+}
+
+#define-button {
+    margin: 0px;
+}
+
+#description-wrapper {
+    clear: both;
+}
+
+#description {
+    margin: 0px 5px;
+    color: #999999;
+}
+
+#definition-wrapper {
+    position: relative;
+    border: solid 1px #BFBFBF; border-radius: 2px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+#headword-wrapper {
+    padding: 8px 10px 10px 10px;
+}
+
+#headword-wrapper.wb-querying,
+#headword-wrapper.wb-setup,
+#headword-wrapper.wb-adding,
+#headword-wrapper.wb-added,
+#headword-wrapper.wb-addable,
+#headword-wrapper.wb-removing {
+    padding-right: 40px;
+}
+
+#headword-wrapper .headword {
+    margin-bottom: 2px;
+    font-size: 22px; color: #333333;
+}
+
+#headword-wrapper .wordsbook-button {
+    display: none;
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAABCCAYAAABTqybaAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMy8wNS8xNAad+JcAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAABSUlEQVRYhe2XPWrDMBiG35RcwIP3TN17g9BB9AZeCuneO1TgS2QsnnqCgqvJ5AYFJycoXjR46FJogzv4BxvrqxQZN1XRCwabDz0SnyU/eFFVFebIsr0py3INYD2BlQVBkI3ADZRPAANAB76YCCLjwV2WVEEIAcYYhBDKOmPMDtwO1AGo+FbowVTyPEdRFKoSb64kiqI761b8kA0AGky1wnQi906ee+D+y8sMxxjJoAM3WjGBr1BvKSoJACzmkun8PfaW9uAu7qnJt0IPpvL6fo+3jydViUPWlr69rE639OeVEtqPnaWfpY5bx72T5x74D1laekvr4y39X8Duqcm3Qg+msn05YndQfrg4IDmAJI3D0y29O1zr5raz9OP+a/CcxiFuHsbq/v1doUsah6P7/sqtwS3krK3IDMcMZKBa7QBs/i8tVzinpb8BrECk1+6OnZkAAAAASUVORK5CYII=') /*images/wb-icons.png*/;
+    transition: opacity linear 0.2s;
+}
+
+#headword-wrapper.wb-querying .wordsbook-button {
+    display: block;
+    background-position: 0px 0px;
+    opacity: 0.5;
+}
+
+#headword-wrapper.wb-setup .wordsbook-button {
+    display: block;
+    background-position: 0px 0px;
+    cursor: pointer;
+}
+
+#headword-wrapper.wb-adding .wordsbook-button {
+    display: block;
+    background-position: 0px -22px;
+    opacity: 0.5;
+}
+
+#headword-wrapper.wb-added .wordsbook-button {
+    display: block;
+    background-position: 0px -22px;
+    cursor: pointer;
+}
+
+#headword-wrapper.wb-addable .wordsbook-button {
+    display: block;
+    background-position: 0px -44px;
+    cursor: pointer;
+}
+
+#headword-wrapper.wb-removing .wordsbook-button {
+    display: block;
+    background-position: 0px -44px;
+    opacity: 0.5;
+}
+
+#headword-wrapper .phonetic-wrapper,
+#headword-wrapper .tenses-wrapper {
+    padding-left: 2px;
+}
+
+#headword-wrapper .phonetic {
+    display: inline-block;
+    line-height: 16px;
+    color: #999999; font-family: Arial;
+    cursor: default;
+}
+
+#headword-wrapper .phonetic > span::before {
+    content: ", ";
+}
+
+#headword-wrapper .phonetic > span:first-child::before {
+    content: none;
+}
+
+#headword-wrapper .audio {
+    display: inline-block;
+    margin: -13px 0px -3px -2px;
+    width: 16px; height: 16px;
+    opacity: 0.5;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAAA3NCSVQICAjb4U/gAAAADFBMVEX////MzMyZmZlmZmZ90EaMAAAABHRSTlMA////sy1AiAAAAAlwSFlzAAAK6wAACusBgosNWgAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAArSURBVAiZY2BAA+wHgIT8gQsMDPVnFzDw/z9eAiQOm8AIIBcsAVECVowCALBMEWET6juKAAAAAElFTkSuQmCC') no-repeat right;
+    cursor: pointer;
+    transition: opacity linear 0.2s;
+}
+
+#headword-wrapper .headword .audio {
+    margin: -15px 0px -1px -2px;
+}
+
+#headword-wrapper .audio:hover {
+    opacity: 1;
+}
+
+#headword-wrapper .tenses-wrapper {
+    color: #999999;
+}
+
+#headword-wrapper .tenses-wrapper span {
+    cursor: default;
+}
+
+#definition-wrapper .definition-item {
+
+
+}
+
+#definition-wrapper .definition-item h3 {
+    line-height: 36px; padding: 0px 10px;
+    background-color: #EEEEEE;
+    color: #999999; font-size: 16px;
+}
+
+#definition-wrapper .definition-pos-item {
+    position: relative;
+}
+
+#definition-wrapper .definition-pos-item .pos {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    display: inline-block;
+    padding: 0px 10px 0px 6px;
+    min-width: 16px;
+    text-align: center;
+    line-height: 18px;
+    font-size: 12px;
+    color: #FFFFFF;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAASCAYAAACTvBTGAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTAvMDUvMTNlu3c3AAAAYUlEQVQYlYXPQQ2AMBBE0QEFlYAUpCAFCZWABCQgAQlIqIPfCyTLZAmT9PKSTX4HQLZVQHwFaI4Vg4l7EXfHmbAHD8cFm4DLcfRySfo8F3BmmCa9sn6/KWDLsADNO5uk2gFegg+fKZsw8AAAAABJRU5ErkJggg==') /*images/pos-bg.png*/ right no-repeat #477EDA;
+}
+
+#definition-wrapper .synonyms-item > p,
+#definition-wrapper .definition-pos-item > ul {
+    padding: 26px 10px 0px 14px; margin: 0px 0px 10px 0px;
+    color: #666666;
+}
+
+
+#definition-wrapper .web-definition-item .definition-pos-item > ul {
+    padding-top: 10px;
+}
+
+#definition-wrapper .definition-pos-item > ul > li {
+    margin-bottom: 2px;
+    list-style: decimal; list-style-position: inside;
+    
+}
+
+#definition-wrapper .web-definition-item .definition-pos-item > ul > li {
+    margin-bottom: 6px;
+    list-style: none;
+}
+
+#definition-wrapper .translation-item {
+    padding-bottom: 10px;
+}
+
+#definition-wrapper .translation-item p {
+    padding: 10px 10px 0px 14px; margin: 0px;
+    font-size: 16px; color: #666666;
+}
+
+#definition-wrapper .translation-item .translated-from {
+    padding-left: 14px; padding-top: 4px;
+    font-size: 12px; color: #999999;
+}
+
+#definition-wrapper .definition-item .word-true {
+    cursor: pointer;
+}
+
+#definition-wrapper .definition-item .word-true:hover {
+    color: #333333;
+}
+
+#definition-wrapper .definition-item .referrer-link-wrapper {
+}
+
+#definition-wrapper .definition-item .referrer-link-wrapper a {
+    display: block;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#definition-wrapper .meanings-show-all {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    display: block;
+    height: 12px;
+    width: 12px;
+    border: solid 1px #FFFFFF;
+    cursor: pointer;
+    background: #EEEEEE url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTAvMDYvMTN3DtjZAAAAeklEQVQYla2QsQ2DQAxF36EMkhEYgRFgg6t+nVHS+ipGYIRswI1wmziNUYAKpFhy4aenb9nJ3blS3SXrjvgAKKXMwAj0klqwJ1CBj6RxS3wBDVh2IUuwDJC2Y3YJc4gZGCTVgxhyD6wxTpJ+G9z90GaWzex95unvf/wCTfRBY03pWP0AAAAASUVORK5CYII=') /*images/more-arrow.png*/ center no-repeat;
+    transition: all ease 0.2s;
+}
+
+#definition-wrapper .meanings-show-all-true {
+    -webkit-transform: rotate(180deg);
+}
+
+#definition-wrapper .meanings-show-all:hover {
+    border: solid 1px #EEEEEE;
+}
+
+#definition-wrapper .bing-copyright {
+    padding: 10px;
+    font-size: 12px; color: #999999;
+    border-top: solid 1px #EEEEEE;
+}
+
+#definition-wrapper .bing-copyright .bing-more-link {
+    float: right;
+    text-decoration: none; color: #999999;
+}
+
+#loading-wrapper,
+#nothing-found-wrapper,
+#error-wrapper {
+    padding-left: 4px;
+    color: #666666;
+}

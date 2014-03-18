@@ -1,0 +1,81 @@
+﻿* {
+    transition: color linear 0.1s, background-color linear 0.1s, border-color linear 0.1s;
+    font-family: inherit;
+    outline: none;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, sans-serif;
+    font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    padding: 0px;
+    margin: 0px;
+}
+
+ul, ol, li, dl, dt, dd {
+    list-style: none;
+    margin: 0px; padding: 0px;
+}
+
+ul.comma-sep-list li {
+    display: inline;
+}
+
+ul.comma-sep-list li::after {
+    content: ", ";
+}
+
+ul.comma-sep-list li:last-child::after {
+    content: none;
+}
+
+input:not([type]),
+input[type="color"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="text"] {
+    height: 28px;
+    font-size: 14px;
+    padding: 0px 6px;
+    border: solid 1px #BFBFBF;
+    outline: none;
+    border-radius: 2px;
+}
+
+button {
+    border: none;
+    height: 30px;
+    padding: 0px 12px;
+    font-size: 14px; color: #FFFFFF;
+    /*text-shadow: 0px 0px 1px #355F8C;*/
+    border-radius: 2px;
+    outline: none;
+    /*background: linear-gradient(#6694E0, #477EDA);*/
+    background-color: #477EDA;
+    transition: all linear 0.2s;
+    cursor: pointer;
+}
+
+button:hover {
+    /*text-shadow: 0px 0px 3px #264566;*/
+    background-color: #6694E0;
+}
+
+button:active {
+    /*box-shadow: inset #355F8C 0px 0px 3px;
+    text-shadow: 0px 0px 3px #264566;*/
+    background-color: #477EDA;
+}
+
+button[disabled] {
+    color: rgba(255,255,255,0.8);
+    background-color: #477EDA;
+    opacity: 0.8;
+    cursor: default;
+}
