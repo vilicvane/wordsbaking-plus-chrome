@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, callback) {
         var keys = [];
         var now = new Date().getTime();
         for (var i in items) {
-            if (/^(?:phrase|translation)Cache\./.test(i)) {
+            if (/^requestCache\./.test(i)) {
                 var item = items[i];
                 if (item.time + 7 * 24 * 3600 * 1000 < now) {
                     keys.push(i);

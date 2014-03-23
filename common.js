@@ -88,9 +88,26 @@
     };
 
     self.addToWordsbook = function (headword, callback) {
+        var alertLimit = 5;
+
         api.call('wordsbook/add', {
             word: headword
         }, function (res, validAccount) {
+
+            if (res) {
+                var remain = res.data.remain;
+
+                if (remain == alertLimit) {
+                    alert(lang.wordsbookCloseToLimit);
+                }
+                else if (remain == 0) {
+                    alert(lang.wordsbookReachesLimit);
+                }
+                else if (remain < 0) {
+                    alert(lang.wordsbookExceedsLimit);
+                }
+            }
+
             callback(validAccount, !!res);
         });
     };
