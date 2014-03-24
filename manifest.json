@@ -1,9 +1,10 @@
 ﻿{
     "manifest_version": 2,
-    "name": "词焙+",
+    "name": "__MSG_wordsbakingPlus__",
     "homepage_url": "http://wordsbaking.com/",
-    "version": "0.2.2",
+    "version": "0.2.5",
     "description": "\"词焙+\" 是 \"词焙背单词\" 的组成部分, 是一款方便好用的划词翻译插件, 同时也可以为词焙生词本添加生词.",
+	"default_locale": "zh_CN",
     "icons": {
         "16": "icons/16.png",
         "48": "icons/48.png",
@@ -39,7 +40,7 @@
         "_execute_browser_action": {
             "suggested_key": {
                 "default": "Ctrl+D",
-                "mac": "MacCtrl+D"
+                "mac": "Command+D"
             }
         }
     }

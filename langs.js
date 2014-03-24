@@ -135,7 +135,7 @@
 var lang;
 (function () {
     var langId = navigator.language;
-    var defaultId = "en-US";
+    var defaultId = chrome.i18n.getMessage('locale');
 
     lang = langs[langId];
 
@@ -152,5 +152,4 @@ var lang;
     if (!lang) {
         lang = langs[defaultId];
     }
-
 })();
