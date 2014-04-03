@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_wordsbakingPlus__",
     "homepage_url": "http://wordsbaking.com/",
-    "version": "0.2.5",
+    "version": "0.2.11",
     "description": "\"词焙+\" 是 \"词焙背单词\" 的组成部分, 是一款方便好用的划词翻译插件, 同时也可以为词焙生词本添加生词.",
 	"default_locale": "zh_CN",
     "icons": {

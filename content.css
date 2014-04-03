@@ -1,4 +1,4 @@
-﻿#wbp-popup,
+#wbp-popup,
 #wbp-popup * {
     display: block!important;
     position: static!important;
@@ -25,6 +25,9 @@
     background: none!important;
     box-shadow: none!important;
     overflow: visible!important;
+    transition: none!important;
+    transform: none!important;
+    content: none!important;
 }
 
 #wbp-popup *::before,
@@ -79,6 +82,21 @@
     position: absolute!important;
     top: -5px!important;
     border-bottom-color: #FFFFFF!important;
+}
+
+#wbp-close {
+    position: absolute!important;
+    top: 0px!important; right: 0px!important;
+    width: 0px!important; height: 0px!important;
+    border: solid #eee 5px!important;
+    border-left-color: transparent!important; border-bottom-color: transparent!important;
+    transition: border-width ease-in-out 0.2s, border-color linear 0.2s!important;
+    cursor: pointer!important;
+}
+
+#wbp-close:hover {
+    border-width: 7px!important;
+    border-top-color: #ccc!important; border-right-color: #ccc!important;
 }
 
 #wbp-headword-wrapper {

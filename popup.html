@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html ng-app="popup" ng-csp>
 <head>
     <title>Wordsloop +</title>
@@ -37,15 +37,6 @@
                 <li ng-repeat="tense in result.tenses"><span title="{{tense.labels.join(', ')}}">{{tense.text}}</span></li>
             </ul>
         </div>
-        <div ng-show="result.synonyms.length" class="definition-item">
-            <h3>
-                {{lang.synonyms}}
-            </h3>
-            <div class="definition-pos-item synonyms-item" ng-repeat="group in result.synonyms">
-                <span class="pos">{{group.pos}}</span>
-                <p clickable-words="group.items.join(', ')"></p>
-            </div>
-        </div>
         <div ng-show="!result.definitions.hash[result.translation.to] && result.translation.text && result.translation.text != result.query" class="definition-item translation-item">
             <h3>
                 {{lang.translation}}
@@ -65,6 +56,29 @@
                 <a class="meanings-show-all meanings-show-all-{{pos.showAll}}" ng-show="pos.meanings.length > settings.defaultMeaningsNumber" ng-click="pos.showAll = !pos.showAll"></a>
             </div>
         </div>
+        <div ng-show="result.synonyms.length" class="definition-item">
+            <h3>
+                {{lang.synonyms}}
+            </h3>
+            <div class="definition-pos-item synonyms-item" ng-repeat="group in result.synonyms">
+                <span class="pos">{{group.pos}}</span>
+                <p clickable-words="group.items.join(', ')"></p>
+            </div>
+        </div>
+        <div ng-show="result.sentences.length" class="definition-item sentence-item">
+            <h3>
+                {{lang.sentences}}
+            </h3>
+            <div class="definition-pos-item">
+                <ul>
+                    <li ng-repeat="sentence in result.sentences" ng-show="$index < settings.defaultSentencesNumber || result.sentences.showAll">
+                        <p class="en" clickable-words="sentence.en"></p>
+                        <p class="zh" clickable-words="sentence.zh"></p>
+                    </li>
+                </ul>
+                <a class="meanings-show-all meanings-show-all-{{result.sentences.showAll}}" ng-show="result.sentences.length > settings.defaultSentencesNumber" ng-click="result.sentences.showAll = !result.sentences.showAll"></a>
+            </div>
+        </div>
         <div ng-show="result.webDefinitions.length" class="definition-item web-definition-item">
             <h3>
                 {{lang.webDefinitions}}
@@ -76,7 +90,7 @@
                         <div class="referrer-link-wrapper"><a href="{{item.url}}" title="{{item.url}}" target="_blank">{{item.url}}</a></div>
                     </li>
                 </ul>
-                <a class="meanings-show-all meanings-show-all-{{result.webDefinitions.showAll}}" ng-show="result.webDefinitions.meanings.length > settings.defaultMeaningsNumber" ng-click="result.webDefinitions.showAll = !result.webDefinitions.showAll"></a>
+                <a class="meanings-show-all meanings-show-all-{{result.webDefinitions.showAll}}" ng-show="result.webDefinitions.length > settings.defaultMeaningsNumber" ng-click="result.webDefinitions.showAll = !result.webDefinitions.showAll"></a>
             </div>
         </div>
         <div class="bing-copyright">

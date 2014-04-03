@@ -1,4 +1,4 @@
-﻿/// <reference path="common.js" />
+/// <reference path="common.js" />
 
 (function () {
     var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -34,7 +34,7 @@
     }).contextmenu(function () {
         popup.hide();
     }).mouseup(function (e) {
-        if (options.popupCtrlKey && e.ctrlKey) {
+        if (options.popupCtrlKey && (e.ctrlKey || e.metaKey)) {
             // seems that this timer is to prevent the click event hide the popup
             setTimeout(function () {
                 showPopup();
@@ -88,6 +88,7 @@
                     '<div id="wbp-translation"></div>' +
                 '</div>' +
                 '<div id="wbp-popup-arrow"><div><div></div></div></div>' +
+                '<div id="wbp-close" title="' + lang.close + '"></div>' +
             '</div>'
         );
 
@@ -96,6 +97,10 @@
         var loadingEle = eleQ.find('#wbp-loading')[0];
         var loadedEle = eleQ.find('#wbp-loaded')[0];
         var arrowEle = eleQ.find('#wbp-popup-arrow')[0];
+
+        eleQ.find('#wbp-close').click(function () {
+            hide();
+        });
 
         var headwordWrapper = eleQ.find('#wbp-headword-wrapper')[0];
 
@@ -314,7 +319,6 @@
 
                 addResultMethods(result);
 
-                //console.log(result);
                 displayNone(loadingEle);
                 displayBlock(loadedEle);
 

@@ -1,6 +1,7 @@
-﻿var settings = {
+var settings = {
     cacheTimeout: 7 * 24 * 3600 * 1000,
-    defaultMeaningsNumber: 3
+    defaultMeaningsNumber: 3,
+    defaultSentencesNumber: 2
 };
 
 var options = {

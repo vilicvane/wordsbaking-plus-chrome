@@ -1,4 +1,4 @@
-﻿/// <reference path="langs.js" />
+/// <reference path="langs.js" />
 /// <reference path="settings.js" />
 /// <reference path="jquery.js" />
 
@@ -177,13 +177,13 @@
                 }
             },
             bingDict: {
-                url: "http://dict.bing.com.cn/api/http/v2/3A7B446E1F9244378B7141B73118977D/en-us/zh-cn/lexicon/?format=application/json&q=$query",
+                url: "http://dict.bing.com.cn/api/http/v2/3A7B446E1F9244378B7141B73118977D/en-us/zh-cn/?format=application/json&q=$query",
                 process: function (data, callback) {
                     var change = {
                         complete: false,
                         dependencies: [],
                         exec: function () {
-                            if (data.LEX) {
+                            if (data && data.LEX) {
                                 var lex = data.LEX;
                                 var headword = lex.HW.V;
                                 var sig = lex.HW.SIG;
@@ -219,6 +219,21 @@
                                 result.webDefinitions = allDefs.webDefinitions;
 
                                 result.tenses = extractTenses(lex);
+
+                                result.sentences = [];
+
+                                if (result.definitions.length && data.SENT) {
+                                    var st = data.SENT.ST || [];
+                                    var length = Math.min(st.length, 5);
+
+                                    for (var i = 0; i < st.length && i < length; i++) {
+                                        var stItem = st[i];
+                                        result.sentences.push({
+                                            en: formatSentence(stItem.T.D),
+                                            zh: formatSentence(stItem.S.D)
+                                        });
+                                    }
+                                }
                             }
 
                             result.headword = {
@@ -445,6 +460,10 @@
         else {
             return undefined;
         }
+    }
+
+    function formatSentence(text) {
+        return text.replace(/\{#{1,2}\*(.+?)\*\${1,2}\}/g, '$1').replace(/\{(\d+)#(.+?)\$\1\}/g, '$2');
     }
 
     function hasZh(phrase) {

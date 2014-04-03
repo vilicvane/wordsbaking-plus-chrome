@@ -1,4 +1,4 @@
-﻿var langs = {
+var langs = {
     "en-US": {
         // popup
         wordsbaking: "WordsBaking",
@@ -9,6 +9,7 @@
             en: "English Definitions",
             zh: "Chinese Definitions"
         },
+        sentences: 'Example Sentences',
         webDefinitions: "Web Definitions",
         addToWordsbook: "add to wordsbook",
         removeFromWordsbook: "remove from wordsbook",
@@ -22,6 +23,7 @@
         translation: "Translation",
         translatedFrom: "Translated from",
         loading: "Loading",
+        close: "close",
         errorLoading: "Error loading data",
         tenses: {
             "pt": "past tense",
@@ -42,7 +44,7 @@
             audioGroup: 'Audio Options',
             autoAudio: "Play audio automatically when it's available",
             popupGroup: 'Popup Options',
-            popupCtrlKey: 'Open a popup layer if the phrase is selected when Ctrl key is pressing',
+            popupCtrlKey: 'Open a popup layer if the phrase is selected when Ctrl key (also Cmd key on Mac) is pressing',
             popupDblClick: 'Open a popup layer if the phrase is selected by double click',
             account: 'WordsBaking Account',
             accountDescriptionHtml: 'Please enter your <a href="http://wordsbaking.com" target="_blank">WordsBaking</a> account below to enable wordsbook feature.',
@@ -70,6 +72,7 @@
             en: "英文释义",
             zh: "中文释义"
         },
+        sentences: '例句',
         webDefinitions: "网络释义",
         addToWordsbook: "添加到词焙生词本",
         removeFromWordsbook: "从词焙生词本中删除",
@@ -83,6 +86,7 @@
         translation: "翻译",
         translatedFrom: "翻译自",
         loading: "加载中",
+        close: "关闭",
         errorLoading: "加载出现错误",
         tenses: {
             "pt": "过去时",
@@ -111,7 +115,7 @@
             audioGroup: '音频选项',
             autoAudio: "有发音时自动播放",
             popupGroup: '弹出层选项',
-            popupCtrlKey: '选择文本的同时按下了 Ctrl 键时弹出浮层',
+            popupCtrlKey: '选择文本的同时按下了 Ctrl 键 (或者 Mac 上的 Cmd 键) 时弹出浮层',
             popupDblClick: '双击选择文本时弹出浮层',
             account: '词焙账号',
             accountDescriptionHtml: '请输入您的<a href="http://wordsbaking.com" target="_blank">词焙</a>账号以便使用生词本功能.',

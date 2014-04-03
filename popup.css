@@ -1,4 +1,4 @@
-﻿body {
+body {
     margin: 10px;
     width: 400px;
 }
@@ -206,6 +206,7 @@ p {
 }
 
 
+#definition-wrapper .sentence-item .definition-pos-item > ul,
 #definition-wrapper .web-definition-item .definition-pos-item > ul {
     padding-top: 10px;
 }
@@ -213,12 +214,28 @@ p {
 #definition-wrapper .definition-pos-item > ul > li {
     margin-bottom: 2px;
     list-style: decimal; list-style-position: inside;
-    
 }
 
+#definition-wrapper .sentence-item .definition-pos-item > ul > li,
 #definition-wrapper .web-definition-item .definition-pos-item > ul > li {
     margin-bottom: 6px;
     list-style: none;
+}
+
+#definition-wrapper .sentence-item .definition-pos-item > ul > li {
+    margin-top: 8px;
+}
+
+#definition-wrapper .sentence-item .definition-pos-item > ul > li:first-child {
+    margin-top: 0px;
+}
+
+#definition-wrapper .sentence-item .definition-pos-item > ul > li:first-child p:first-child {
+    margin-right: 15px;
+}
+
+#definition-wrapper .sentence-item .definition-pos-item > ul > li p:first-child {
+    margin-bottom: 2px;
 }
 
 #definition-wrapper .translation-item {
