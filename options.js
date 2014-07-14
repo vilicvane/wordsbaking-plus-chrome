@@ -1,4 +1,4 @@
-﻿/// <reference path="langs.js" />
+/// <reference path="langs.js" />
 /// <reference path="jquery.js" />
 /// <reference path="angular.js" />
 
@@ -71,6 +71,7 @@ var MainController = ['$scope', '$sce', function ($scope, $sce) {
                     autoAudio: true,
                     popupCtrlKey: true,
                     popupDblClick: true,
+                    popupSelect: false,
                     email: undefined,
                     password: undefined
                 };

@@ -61,6 +61,22 @@
             $.post(apiBaseUrl + path, data).done(function (res) {
                 if (res.error) {
                     if (res.error > 2000 && res.error < 3000) {
+                        switch (res.error) {
+                            case 2001:
+                                options.password = undefined;
+                                break;
+                            case 2002:
+                                options.email = undefined;
+                                options.password = undefined;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        chrome.storage.sync.set({
+                            options: options
+                        });
+
                         callback(null, false);
                     }
                     else {
@@ -241,7 +257,7 @@
                                 beautified: headword
                             };
 
-                            result.wordsbookStatus = /^[a-z]+(?:['-][a-z]+)?$/i.test(headword) ? 'querying' : undefined;
+                            result.wordsbookStatus = /^[a-z]+(?:['-][a-z]+)?$/i.test(headword || '') ? 'querying' : undefined;
                         }
                     };
 

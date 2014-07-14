@@ -1,4 +1,4 @@
-﻿/// <reference path="common.js" />
+/// <reference path="common.js" />
 /// <reference path="jquery.js" />
 /// <reference path="settings.js" />
 /// <reference path="angular.js" />

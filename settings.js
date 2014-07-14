@@ -8,6 +8,7 @@ var options = {
     autoAudio: true,
     popupCtrlKey: true,
     popupDblClick: true,
+    popupSelect: false,
     email: undefined,
     password: undefined
 };

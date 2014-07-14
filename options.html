@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html ng-app ng-controller="MainController">
 <head>
+    <meta charset="utf-8" />
     <title>{{lang.options.pageTitle}}</title>
     <link href="main.min.css" rel="stylesheet" />
     <link href="options.min.css" rel="stylesheet" />
@@ -27,6 +28,11 @@
             <li>
                 <label>
                     <input type="checkbox" ng-model="options.popupCtrlKey" /> {{lang.options.popupCtrlKey}}
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox" ng-model="options.popupSelect" /> {{lang.options.popupSelect}}
                 </label>
             </li>
             <li>

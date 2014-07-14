@@ -25,8 +25,10 @@
 
     var popup = new Popup();
 
+    var cancelDblClick = false;
+
     $(document).dblclick(function () {
-        if (options.popupDblClick) {
+        if (!cancelDblClick && options.popupDblClick) {
             showPopup();
         }
     }).click(function () {
@@ -34,9 +36,11 @@
     }).contextmenu(function () {
         popup.hide();
     }).mouseup(function (e) {
-        if (options.popupCtrlKey && (e.ctrlKey || e.metaKey)) {
+        if (options.popupCtrlKey && (e.ctrlKey || e.metaKey) || options.popupSelect) {
+            cancelDblClick = true;
             // seems that this timer is to prevent the click event hide the popup
             setTimeout(function () {
+                cancelDblClick = false;
                 showPopup();
             }, 0);
         }

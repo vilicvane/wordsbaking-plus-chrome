@@ -1,24 +1,3 @@
-﻿/// <reference path="langs.js" />
-/// <reference path="jquery.js" />
-/// <reference path="common.js" />
-
-chrome.runtime.onMessage.addListener(function (message, sender, callback) {
-    var type = message.type;
-    var args = message.args.concat();
-    switch (type) {
-        case "fetchResult":
-            args.push(function (complete, result) {
-                if (complete) {
-                    callback(result);
-                }
-            });
-            return fetchResult.apply(null, args);
-        default:
-            args.push(callback);
-            return self[type].apply(args);
-    }
-});
-
 (function () {
     chrome.storage.local.get(function (items) {
         var keys = [];
