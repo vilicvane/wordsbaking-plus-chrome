@@ -12,4 +12,22 @@
         }
         chrome.storage.local.remove(keys);
     });
+
+    chrome.runtime.onMessage.addListener(function (message, sender, callback) {
+        switch (message.type) {
+            case 'request':
+                $.getJSON(message.url).success(function (data) {
+                    callback({
+                        data: data,
+                        success: true
+                    });
+                }).error(function () {
+                    callback({
+                        data: null,
+                        success: false
+                    });
+                });
+                return true;
+        }
+    });
 })();

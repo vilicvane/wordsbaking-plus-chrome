@@ -501,19 +501,25 @@ function cacheRequest(url, callback, key) {
             callback(item.data, true);
         }
         else {
-            $.getJSON(url).success(function (data) {
-                items[key] = {
-                    time: new Date().getTime(),
-                    data: data
-                };
+            chrome.runtime.sendMessage({
+                type: 'request',
+                url: url
+            }, function (result) {
+                var data = result.data;
+                if (result.success) {
+                    items[key] = {
+                        time: new Date().getTime(),
+                        data: data
+                    };
 
-                chrome.storage.local.set(items);
-                callback(data, true);
-            }).error(function () {
-                callback(null, false);
+                    chrome.storage.local.set(items);
+                }
+
+                callback(data, result.success);
             });
         }
     });
+
 }
 
 function hasZh(phrase) {

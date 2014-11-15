@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html ng-app ng-controller="MainController">
 <head>
@@ -45,11 +45,11 @@
         <dl class="options-list">
             <dt ng-bind-html="lang.options.accountDescriptionHtml"></dt>
             <dd>
-                <input type="text" ng-model="options.email" placeholder="{{lang.options.email}}" />
+                <input type="text" tabindex="1" ng-model="options.email" placeholder="{{lang.options.email}}" />
                 <button id="check-account-button">{{lang.options.checkAccount}}</button>
             </dd>
             <dd>
-                <input type="password" ng-model="options.password" placeholder="{{lang.options.password}}" />
+                <input type="password" tabindex="2" ng-model="options.password" placeholder="{{lang.options.password}}" />
             </dd>
             <dd id="account-status">
                 <div id="account-status-checking">{{lang.options.checkingAccount}}</div>
