@@ -36,7 +36,5 @@
         "storage"
     ],
 	"web_accessible_resources": ["options.html"],
-    "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'",
-    "commands": { },
-    "update_url": "http://wordsbaking.com/plus/chrome-update.xml"
+    "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'"
 }
