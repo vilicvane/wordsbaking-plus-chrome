@@ -1,0 +1,5 @@
+dev/
+store/
+node_modules/
+
+*.zip

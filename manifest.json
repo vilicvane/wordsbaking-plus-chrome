@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_wordsbakingPlus__",
     "homepage_url": "http://wordsbaking.com/",
-    "version": "0.2.19",
+    "version": "0.3.0",
     "description": "\"词焙+\" 是 \"词焙背单词\" 的组成部分, 是一款方便好用的划词翻译插件, 同时也可以为词焙生词本添加生词.",
 	"default_locale": "zh_CN",
     "icons": {
@@ -20,13 +20,13 @@
     "content_scripts": [
         {
             "all_frames": true,
-            "css": ["content.min.css"],
-            "js": ["jquery.min.js", "langs.min.js", "settings.min.js", "common.min.js", "content.min.js"],
+            "css": ["styles/content.css"],
+            "js": ["lib/jquery.js", "src/langs.js", "src/settings.js", "src/common.js", "src/content.js"],
             "matches": ["<all_urls>"]
         }
     ],
     "background": {
-        "scripts": ["jquery.min.js", "background.min.js"]
+        "scripts": ["lib/jquery.js", "src/background.js"]
     },
     "options_page": "options.html",
     "permissions": [
@@ -36,13 +36,6 @@
     ],
 	"web_accessible_resources": ["options.html"],
     "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'",
-    "commands": {
-        "_execute_browser_action": {
-            "suggested_key": {
-                "default": "Ctrl+D",
-                "mac": "Command+D"
-            }
-        }
-    },
+    "commands": { },
     "update_url": "http://wordsbaking.com/plus/chrome-update.xml"
 }

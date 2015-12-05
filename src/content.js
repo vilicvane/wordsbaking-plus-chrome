@@ -57,21 +57,6 @@
         popup.show(text, selection.getRangeAt(0));
     }
 
-    function getSelection() {
-        var selection;
-        // in case of getSelection being overridden.
-        if (hasOwnProperty.call(window, "getSelection")) {
-            var windowGetSelection = window.getSelection;
-            delete window.getSelection;
-            selection = window.getSelection();
-            window.getSelection = windowGetSelection;
-        }
-        else {
-            selection = window.getSelection();
-        }
-        return selection;
-    }
-
     function Popup() {
         var that = this;
 
