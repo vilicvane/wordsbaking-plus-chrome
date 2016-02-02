@@ -175,7 +175,15 @@
 
         var processes = {
             baiduTrans: {
-                url: "http://openapi.baidu.com/public/2.0/bmt/translate?client_id=WoxFqsePq4my7ky741GtGSIq&q=$query&from=auto&to=auto",
+                appID: "20160202000010644",
+                secret: "GvS4zwkU_a7NNIM1wGZ_",
+                url: "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&q=$query&appid=20160202000010644",
+                getUrl: function(regex, encodeKeyword) {
+                    var decodeKeyword = decodeURIComponent(encodeKeyword);
+                    var salt = (new Date()).valueOf();
+                    var sign = md5(this.appID + decodeKeyword + salt + this.secret);
+                    return this.url.replace(regex, decodeKeyword) + "&salt=" + salt + "&sign=" + sign;
+                },
                 process: function (data, callback) {
                     var change = {
                         complete: false,
@@ -194,6 +202,9 @@
             },
             bingDict: {
                 url: "http://dict.bing.com.cn/api/http/v2/3A7B446E1F9244378B7141B73118977D/en-us/zh-cn/?format=application/json&q=$query",
+                getUrl: function() {
+                    return this.url.replace(regex, encodeKeyword);
+                },
                 process: function (data, callback) {
                     var change = {
                         complete: false,
@@ -206,7 +217,7 @@
 
                                 result.phonetics = [];
                                 result.audio = {};
-                                
+
                                 var pron = lex.PRON;
                                 var phonetic;
 
@@ -320,7 +331,7 @@
             }
 
             process.ready = false;
-            cacheRequest(process.url.replace(/\$query\b/g, encodeURIComponent(phrase)), function (text, done) {
+            cacheRequest(process.getUrl(/\$query\b/g, encodeURIComponent(phrase)), function (text, done) {
                 process.process(text, function (change) {
                     process.ready = true;
                     processCallback(change);
