@@ -180,11 +180,11 @@
                 getUrl: function(query) {
                     var salt = Date.now();
                     var sign = md5(this.appID + query + salt + this.secret);
-                    return "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&q="
-                        + query
-                        + "&appid=" + this.appID
-                        + "&salt=" + salt
-                        + "&sign=" + sign;
+                    return "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&q=" +
+                        encodeURIComponent(query) +
+                        "&appid=" + this.appID +
+                        "&salt=" + salt +
+                        "&sign=" + sign;
                 },
                 process: function (data, callback) {
                     var change = {
