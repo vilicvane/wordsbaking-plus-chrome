@@ -177,12 +177,14 @@
             baiduTrans: {
                 appID: "20160202000010644",
                 secret: "GvS4zwkU_a7NNIM1wGZ_",
-                url: "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&q=$query&appid=20160202000010644",
-                getUrl: function(regex, encodeKeyword) {
-                    var decodeKeyword = decodeURIComponent(encodeKeyword);
-                    var salt = (new Date()).valueOf();
-                    var sign = md5(this.appID + decodeKeyword + salt + this.secret);
-                    return this.url.replace(regex, decodeKeyword) + "&salt=" + salt + "&sign=" + sign;
+                getUrl: function(query) {
+                    var salt = Date.now();
+                    var sign = md5(this.appID + query + salt + this.secret);
+                    return "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&q="
+                        + query
+                        + "&appid=" + this.appID
+                        + "&salt=" + salt
+                        + "&sign=" + sign;
                 },
                 process: function (data, callback) {
                     var change = {
@@ -201,9 +203,8 @@
                 }
             },
             bingDict: {
-                url: "http://dict.bing.com.cn/api/http/v2/3A7B446E1F9244378B7141B73118977D/en-us/zh-cn/?format=application/json&q=$query",
-                getUrl: function() {
-                    return this.url.replace(regex, encodeKeyword);
+                getUrl: function(query) {
+                    return "http://dict.bing.com.cn/api/http/v2/3A7B446E1F9244378B7141B73118977D/en-us/zh-cn/?format=application/json&q=" + encodeURIComponent(query);
                 },
                 process: function (data, callback) {
                     var change = {
@@ -331,7 +332,7 @@
             }
 
             process.ready = false;
-            cacheRequest(process.getUrl(/\$query\b/g, encodeURIComponent(phrase)), function (text, done) {
+            cacheRequest(process.getUrl(phrase), function (text, done) {
                 process.process(text, function (change) {
                     process.ready = true;
                     processCallback(change);
