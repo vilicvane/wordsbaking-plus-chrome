@@ -1,7 +1,3 @@
-/// <reference path="langs.js" />
-/// <reference path="settings.js" />
-/// <reference path="jquery.js" />
-
 (function () {
     self.splitWords = function (str, prefix, isHtml) {
         if (isHtml) {

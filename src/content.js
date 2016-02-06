@@ -1,5 +1,3 @@
-/// <reference path="common.js" />
-
 (function () {
     var hasOwnProperty = Object.prototype.hasOwnProperty;
 

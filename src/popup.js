@@ -1,9 +1,3 @@
-/// <reference path="common.js" />
-/// <reference path="jquery.js" />
-/// <reference path="settings.js" />
-/// <reference path="angular.js" />
-/// <reference path="lang.js" />
-
 $(function () {
     var input = $("#phrase-input").mousedown(function (e) {
         if (document.activeElement != this) {

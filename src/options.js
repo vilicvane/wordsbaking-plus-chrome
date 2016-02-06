@@ -1,7 +1,3 @@
-/// <reference path="langs.js" />
-/// <reference path="jquery.js" />
-/// <reference path="angular.js" />
-
 var MainController = ['$scope', '$sce', function ($scope, $sce) {
     $scope.lang = lang;
 
