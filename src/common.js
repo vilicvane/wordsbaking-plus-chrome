@@ -135,10 +135,10 @@
     function addResultMethods(result) {
         result.noResult = function (countSynonyms) {
             return !(
-                    this.definitions && this.definitions.length ||
-                    this.webDefinitions && this.webDefinitions.length ||
-                    this.translation && this.translation.text && this.translation.text != this.query ||
-                    countSynonyms && this.synonyms && this.synonyms.length
+                this.definitions && this.definitions.length ||
+                this.webDefinitions && this.webDefinitions.length ||
+                this.translation && this.translation.text && this.translation.text != this.query ||
+                countSynonyms && this.synonyms && this.synonyms.length
             );
         };
         result.onlyTranslation = function (countSynonyms) {
@@ -187,7 +187,7 @@
                         complete: false,
                         dependencies: [],
                         exec: function () {
-                            result.translation = data ? {
+                            result.translation = data && data.trans_result ? {
                                 text: data.trans_result[0].dst,
                                 src: data.from,
                                 to: data.to
