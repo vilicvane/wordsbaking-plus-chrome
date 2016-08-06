@@ -549,7 +549,7 @@ function doubleDecode(str) {
 function encodeHtml(text) {
     var temp = document.createElement("div");
     temp.innerText = text;
-    return temp.innerHTML;
+    return temp.innerHTML.replace(/&nbsp;/g, ' ');
 }
 
 function decodeHtml(html) {

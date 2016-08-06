@@ -170,11 +170,6 @@ p {
     cursor: default;
 }
 
-#definition-wrapper .definition-item {
-
-
-}
-
 #definition-wrapper .definition-item h3 {
     line-height: 36px; padding: 0px 10px;
     background-color: #EEEEEE;
@@ -260,9 +255,6 @@ p {
     color: #333333;
 }
 
-#definition-wrapper .definition-item .referrer-link-wrapper {
-}
-
 #definition-wrapper .definition-item .referrer-link-wrapper a {
     display: block;
     text-decoration: none;
@@ -285,7 +277,7 @@ p {
 }
 
 #definition-wrapper .meanings-show-all-true {
-    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 #definition-wrapper .meanings-show-all:hover {

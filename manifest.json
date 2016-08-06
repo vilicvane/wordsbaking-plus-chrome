@@ -1,10 +1,10 @@
-﻿{
+{
     "manifest_version": 2,
     "name": "__MSG_wordsbakingPlus__",
     "homepage_url": "http://wordsbaking.com/",
     "version": "0.3.4",
     "description": "\"词焙+\" 是 \"词焙背单词\" 的组成部分, 是一款方便好用的划词翻译插件, 同时也可以为词焙生词本添加生词.",
-	"default_locale": "zh_CN",
+    "default_locale": "zh_CN",
     "icons": {
         "16": "icons/16.png",
         "48": "icons/48.png",
@@ -21,13 +21,25 @@
     "content_scripts": [
         {
             "all_frames": true,
-            "css": ["styles/content.css"],
-            "js": ["lib/jquery.js", "lib/md5.js", "src/langs.js", "src/settings.js", "src/common.js", "src/content.js"],
-            "matches": ["<all_urls>"]
+            "css": [
+                "styles/content.css"
+            ],
+            "js": [
+                "lib/jquery.js",
+                "lib/md5.js",
+                "src/langs.js",
+                "src/settings.js",
+                "src/common.js",
+                "src/content.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
         }
     ],
     "background": {
-        "scripts": ["lib/jquery.js", "src/background.js"]
+        "page": "background.html",
+        "persistent": true
     },
     "options_page": "options.html",
     "permissions": [
@@ -35,6 +47,12 @@
         "https://*/",
         "storage"
     ],
-	"web_accessible_resources": ["options.html"],
-    "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'; media-src *"
+    "web_accessible_resources": [
+        "options.html"
+    ],
+    "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'; media-src *",
+    "-ms-preload": {
+        "backgroundScript": "backgroundScriptsAPIBridge.js",
+        "contentScript": "contentScriptsAPIBridge.js"
+    }
 }
