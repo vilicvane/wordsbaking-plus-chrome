@@ -200,7 +200,7 @@
             },
             bingDict: {
                 getUrl: function(query) {
-                    return "http://dict.bing.com.cn/api/http/v2/4154AA7A1FC54ad7A84A0236AA4DCAF1/en-us/zh-cn/?format=application/json&q=" + encodeURIComponent(query);
+                    return "https://dict.bing.com.cn/api/http/v2/4154AA7A1FC54ad7A84A0236AA4DCAF1/en-us/zh-cn/lexicon/?format=application/json&q=" + encodeURIComponent(query);
                 },
                 process: function (data, callback) {
                     var change = {
