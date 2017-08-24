@@ -50,9 +50,5 @@
     "web_accessible_resources": [
         "options.html"
     ],
-    "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'; media-src *",
-    "-ms-preload": {
-        "backgroundScript": "backgroundScriptsAPIBridge.js",
-        "contentScript": "contentScriptsAPIBridge.js"
-    }
+    "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'; media-src *"
 }
