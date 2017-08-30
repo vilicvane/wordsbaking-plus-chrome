@@ -230,6 +230,7 @@
                         dependencies: [],
                         exec: function () {
                             var headword = '';
+                            
                             if (data && data.value && data.value.length) {
                                 var firstDataValue = data.value[0];
                                 var meaningGroups = firstDataValue.meaningGroups;
@@ -430,8 +431,8 @@
 
                         var richDefinitions = firstMeaning.richDefinitions;
 
-                        for (var i = 0; i < richDefinitions.length; i++) {
-                            let definition = richDefinitions[i];
+                        for (var rI = 0; rI < richDefinitions.length; rI++) {
+                            let definition = richDefinitions[rI];
 
                             webDefinitions.push({
                                 url: definition.examples[0],
