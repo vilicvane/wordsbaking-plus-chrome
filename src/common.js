@@ -1,4 +1,26 @@
 (function () {
+    var posDict = {
+        '名词': 'n.',
+        '动词': 'v.',
+        '形容词': 'adj.',
+        '副词': 'adv.',
+        '介词': 'prep.',
+        '连词': 'conj.'
+    };
+
+    var definitionTypeSet = {
+        '快速释义': true,
+        '汉英': true,
+        '英汉': true,
+        '英英': true
+    };
+
+    var langDict = {
+        '汉英': 'en',
+        '英汉': 'zh',
+        '英英': 'en'
+    };
+    
     self.splitWords = function (str, prefix, isHtml) {
         if (isHtml) {
             str = decodeHtml(str);
@@ -168,11 +190,11 @@
             translation: undefined,
             bingSearchUrl: "http://www.bing.com/search?q=" + encodeURIComponent(phrase)
         };
-
+        
         var processes = {
             baiduTrans: {
-                appID: "20160202000010644",
-                secret: "GvS4zwkU_a7NNIM1wGZ_",
+                appID: options.baiduTranslationAppID,
+                secret: options.baiduTranslationAppSecretKey,
                 getUrl: function(query) {
                     var salt = Date.now();
                     var sign = md5(this.appID + query + salt + this.secret);
@@ -200,64 +222,50 @@
             },
             bingDict: {
                 getUrl: function(query) {
-                    return "https://dict.bing.com.cn/api/http/v2/4154AA7A1FC54ad7A84A0236AA4DCAF1/en-us/zh-cn/lexicon/?format=application/json&q=" + encodeURIComponent(query);
+                    return "https://www.bing.com/api/v6/dictionarywords/search?q="+encodeURIComponent(query)+"&appid=371E7B2AF0F9B84EC491D731DF90A55719C7D209&mkt=zh-cn&pname=bingdict&dtype=lex";
                 },
                 process: function (data, callback) {
                     var change = {
                         complete: false,
                         dependencies: [],
                         exec: function () {
-                            if (data && data.LEX) {
-                                var lex = data.LEX;
-                                var headword = lex.HW.V;
-                                var sig = lex.HW.SIG;
-
+                            var headword = '';
+                            
+                            if (data && data.value && data.value.length) {
+                                var firstDataValue = data.value[0];
+                                var meaningGroups = firstDataValue.meaningGroups;
+                                var pronunciationAudioUrl = firstDataValue.pronunciationAudio.contentUrl;
+                                headword = firstDataValue.name;
+                                
+                                var pronunciations = extractPronunciations(meaningGroups);
+                                
                                 result.phonetics = [];
                                 result.audio = {};
+                                
+                                for (var i = 0; i < pronunciations.length; i++) {
+                                    var pronunciation = pronunciations[i];
+                                    
+                                    if (pronunciation.type === 'PY') {
+                                        result.phonetics.push({
+                                            text: pronunciation.pron,
+                                            poss: []
+                                        });
+                                    } else {
+                                        result.phonetics.push({
+                                            text: "/" + pronunciation.pron + "/",
+                                            poss: []
+                                        });
 
-                                var pron = lex.PRON;
-                                var phonetic;
-
-                                if (pron) {
-                                    for (var i = 0; i < pron.length; i++) {
-                                        if (pron[i].L == "PY") {
-                                            result.phonetics.push({
-                                                text: pron[i].V,
-                                                poss: []
-                                            });
-                                        }
-                                        else if (pron[i].L == "US"  && !result.phonetics.length) {
-                                            result.phonetics.push({
-                                                text: "/" + pron[i].V + "/",
-                                                poss: []
-                                            });
-                                            result.audio.us = 'http://media.engkoo.com:8129/en-us/' + sig + '.mp3';
-                                        }
+                                        result.audio.us = pronunciationAudioUrl;
                                     }
                                 }
-
-                                result.synonyms = extractSynonyms(lex.THES);
-
-                                var allDefs = extractDefinitions(phrase, lex);
+                                
+                                var allDefs = extractDefinitions(phrase, meaningGroups);
                                 result.definitions = allDefs.definitions;
                                 result.webDefinitions = allDefs.webDefinitions;
-
-                                result.tenses = extractTenses(lex);
-
-                                result.sentences = [];
-
-                                if (result.definitions.length && data.SENT) {
-                                    var st = data.SENT.ST || [];
-                                    var length = Math.min(st.length, 5);
-
-                                    for (var i = 0; i < st.length && i < length; i++) {
-                                        var stItem = st[i];
-                                        result.sentences.push({
-                                            en: formatSentence(stItem.T.D),
-                                            zh: formatSentence(stItem.S.D)
-                                        });
-                                    }
-                                }
+                                result.tenses = extractTenses(meaningGroups);
+                                result.synonyms = extractSynonyms(meaningGroups);
+                                result.sentences = extractSentences(meaningGroups);
                             }
 
                             result.headword = {
@@ -307,8 +315,6 @@
                 change.exec();
                 callback(!pendingProcess || change.complete, result);
 
-                //console.log("complete " + complete);
-
                 if (change.complete) {
                     completed = true;
                     break;
@@ -341,108 +347,141 @@
 
     }
 
-    function extractSynonyms(items) {
+    function extractPronunciations(meaningGroups) {
+        var pronunciations = [];
+
+        if (!meaningGroups) {
+            return pronunciations;
+        }
+
+        var set = {};
+
+        for (var i = 0; i < meaningGroups.length; i++) {
+            var meaningGroup = meaningGroups[i];
+            var firstSpeech = meaningGroup.partsOfSpeech[0];
+            var firstMeaning = meaningGroup.meanings[0];
+
+            if (!firstMeaning || !firstSpeech || set.hasOwnProperty(firstSpeech.name)) {
+                continue;
+            }
+
+            switch (firstSpeech.name) {
+                case 'US':
+                case 'PY':
+                    set[firstSpeech.name] = true;
+                    pronunciations.push({ type: firstSpeech.name, pron: firstMeaning.richDefinitions[0].fragments[0].text});
+                    break;
+            }
+        }
+
+        return pronunciations;
+    }
+
+    function extractSynonyms(meaningGroups) {
         // from Bing
 
         var synonyms = [];
 
-        if (!items) {
+        if (!meaningGroups) {
             return synonyms;
         }
 
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            if (item.S && item.S.length) {
+        for (var i = 0; i < meaningGroups.length; i++) {
+            var meaningGroup = meaningGroups[i];
+            var firstMeaning = meaningGroup.meanings[0];
+
+            if (firstMeaning && firstMeaning.synonyms) {
                 synonyms.push({
-                    pos: item.POS,
-                    items: item.S
+                    pos: 'ALL',
+                    items:  firstMeaning.synonyms.map(item => item.name)
                 });
+                break;
             }
         }
 
         return synonyms;
     }
 
-    function extractDefinitions(query, lex) {
+    function extractDefinitions(query, meaningGroups) {
         // from Bing
-        if (!lex) {
-            return {};
-        }
 
         var definitions = [];
         var webDefinitions = [];
-        var hash = definitions.hash = {};
+        var chineseDefinitions = { lang: 'zh', poss: [] };
+        var englishDefinitions = { lang: 'en', poss: [] };
+        var posMap = { zh: {}, en: {} };
 
+        if (!meaningGroups) {
+            return definitions;
+        }
 
-        var cDef = lex.C_DEF;
+        for (var i = 0; i < meaningGroups.length; i++) {
+            var meaningGroup = meaningGroups[i];
+            var firstSpeech = meaningGroup.partsOfSpeech[0];
+            var firstMeaning = meaningGroup.meanings[0];
+            var description = firstSpeech.description;
+            
+            if (definitionTypeSet.hasOwnProperty(description)) {
+                var lang = langDict[description];
+                switch (firstSpeech.name) {
+                    case '网络':
+                        if (description === '快速释义') {
+                            break;
+                        }
 
-        if (cDef) {
-            var def = {
-                lang: hasZh(query) ? "en" : "zh",
-                poss: []
-            };
+                        var richDefinitions = firstMeaning.richDefinitions;
 
+                        for (var rI = 0; rI < richDefinitions.length; rI++) {
+                            var definition = richDefinitions[rI];
 
-            for (var i = 0; i < cDef.length; i++) {
-                var cPos = cDef[i];
-
-                var pos = {
-                    pos: cPos.POS,
-                    meanings: []
-                };
-
-                if (pos.pos == "web") {
-                    var sen = cPos.SEN;
-                    for (var j = 0; j < sen.length; j++) {
-                        if (sen[j].D) {
                             webDefinitions.push({
-                                text: sen[j].D,
-                                url: sen[j].URL
+                                url: definition.examples[0],
+                                text: definition.fragments[0].text
                             });
                         }
-                    }
-                }
-                else {
-                    var sen = cPos.SEN;
-                    for (var j = 0; j < sen.length; j++) {
-                        pos.meanings.push(sen[j].D);
-                    }
-                    def.poss.push(pos);
-                }
-            }
+                    break;
+                    default:
+                        if (!lang) {
+                            lang = hasZh(firstMeaning.richDefinitions[0].fragments[0].text) ? 'zh' : 'cn';
+                        }
+                        
+                        var targetDefinitions = lang === 'zh' ? chineseDefinitions : englishDefinitions;
+                        var targetPosMap = lang === 'zh' ? posMap.zh : posMap.en;
+                        var pos = posDict[firstSpeech.name] || firstSpeech.name;
+                        var meanings = targetPosMap[pos];
 
-            if (def.poss.length) {
-                hash[def.lang] = true;
-                definitions.push(def);
+                        if (!meanings) {
+                            meanings = targetPosMap[pos] = [];
+                            targetDefinitions.poss.push({ pos: pos, meanings: meanings })
+                        }
+                        
+                        meanings.push.apply(meanings, extractFragmentsText(firstMeaning.richDefinitions[0].fragments))
+                        break;
+                }
             }
         }
 
-        var hDef = lex.H_DEF;
-
-        if (hDef) {
-            var def = {
-                lang: hasZh(query) ? "zh" : "en",
-                poss: []
-            };
-
-            hash[def.lang] = true;
-
-            for (var i = 0; i < hDef.length; i++) {
-                var hPos = hDef[i];
-
-                var pos = {
-                    pos: hPos.POS,
-                    meanings: []
-                };
-
-                var sen = hPos.SEN;
-                for (var j = 0; j < sen.length; j++) {
-                    pos.meanings.push(sen[j].D);
-                }
-                def.poss.push(pos);
+        if (hasZh(query)) {
+            if (englishDefinitions.poss.length) {
+                definitions.push(englishDefinitions);
             }
 
-            definitions.push(def);
+            if (chineseDefinitions.poss.length) {
+                definitions.push(chineseDefinitions);
+            }
+
+        } else {
+            if (chineseDefinitions.poss.length) {
+                definitions.push(chineseDefinitions);
+            }
+
+            if (englishDefinitions.poss.length) {
+                definitions.push(englishDefinitions);
+            }
+        }
+
+        for (var i = 0; i < definitions.length; i++) {
+            adjustmentDefinitionPosResult(definitions[i].poss);
         }
 
         return {
@@ -451,41 +490,80 @@
         };
     }
 
-    function extractTenses(lex) {
-        var inf = lex.INF;
+    function extractFragmentsText(fragments) {
+        var texts = [];
 
-        if (inf) {
-            var tenses = [];
-            var tensesHash = {};
-            var hOP = Object.prototype.hasOwnProperty;
-
-            for (var i = 0; i < inf.length; i++) {
-                var tenseData = inf[i];
-                var text = tenseData.IE;
-                var label = lang.tenses[tenseData.T] || tenseData.T;
-
-                if (hOP.call(tensesHash, text)) {
-                    var tense = tensesHash[text];
-                    if (tense.labels.indexOf(label) < 0) {
-                        tense.labels.push(label);
-                    }
-                }
-                else {
-                    var tense = {
-                        text: text,
-                        labels: [label]
-                    };
-                    tensesHash[text] = tense;
-                    tenses.push(tense);
-                }
-            }
-            return tenses;
+        for (var i = 0; i < fragments.length; i++) {
+            texts.push(fragments[i].text);
         }
-        else {
-            return undefined;
-        }
+
+        return texts;
     }
 
+    function extractTenses(meaningGroups) {
+        // from Bing
+        
+        var tenses = [];
+        if (!meaningGroups) {
+            return tenses;
+        }
+
+        for (var i = 0; i < meaningGroups.length; i++) {
+            var meaningGroup = meaningGroups[i];
+            var firstMeaning = meaningGroup.meanings[0];
+            var firstSpeech = meaningGroup.partsOfSpeech[0];
+
+            if (firstSpeech.name === '变形') {
+                tenses = firstMeaning.richDefinitions[0].fragments;
+
+                break;
+            }
+        }
+
+        for (var i = 0; i < tenses.length; i++) {
+            tenses[i].text = tenses[i].text.replace(/[^a-z]+/ig, '');
+        }
+
+        return tenses;
+    }
+
+    function extractSentences(meaningGroups) {
+        // from Bing
+        
+        var sentences = [];
+
+        if (!meaningGroups) {
+            return sentences;
+        }
+
+        for (var i = 0; i < meaningGroups.length; i++) {
+            var meaningGroup = meaningGroups[i];
+            var firstMeaning = meaningGroup.meanings[0];
+            var firstSpeech = meaningGroup.partsOfSpeech[0];
+            
+            if (firstSpeech.name === '网络') {
+                continue;
+            }
+
+            var richDefinitions = firstMeaning.richDefinitions;
+
+            for (var rI = 0; rI < richDefinitions.length; rI++) {
+                var definition = richDefinitions[rI];
+
+                if (!definition.examples || definition.examples.length !== 2) {
+                    continue;
+                }
+
+                sentences.push({
+                    en: definition.examples[0],
+                    zh: definition.examples[1]
+                });
+            }
+        }
+
+        return sentences;
+    }
+   
     function formatSentence(text) {
         return text.replace(/\{#{1,2}\*(.+?)\*\${1,2}\}/g, '$1').replace(/\{(\d+)#(.+?)\$\1\}/g, '$2');
     }
@@ -503,6 +581,7 @@
 
 function cacheRequest(url, callback, key) {
     key = "requestCache." + (key || "default") + "." + url;
+    chrome.storage.local.clear();
     chrome.storage.local.get(key, function (items) {
         var item = items[key];
         if (item && item.time + settings.cacheTimeout * 24 * 3600 * 1000 > new Date().getTime()) {
@@ -556,4 +635,42 @@ function decodeHtml(html) {
     var temp = document.createElement("div");
     temp.innerHTML = html;
     return temp.innerText;
+}
+
+function adjustmentDefinitionPosResult(poss) {
+    for (var i = 0; i < poss.length; i++) {
+        var pos = poss[i];
+        duplicateRemovalMeaning(pos.meanings);
+    }
+
+    return poss;
+}
+
+function duplicateRemovalMeaning(meanings) {
+    var meaningSet = {};
+    var n = 0; 
+
+    outerLoop: 
+    for (var i = 0; i < meanings.length; i++) {
+        var meaning = meanings[i];
+
+        if (meaningSet.hasOwnProperty(meaning)) {
+            continue;
+        }
+
+        for (var j = 0; j < n; j++) {
+            var stashMeaning = meanings[j];
+
+            if (stashMeaning.indexOf(meaning) > -1 || meaning.indexOf(stashMeaning) > -1) {
+                continue outerLoop;
+            }
+        }
+
+        meanings[n++] = meaning;
+        meaningSet[meaning] = true;
+    }
+
+    meanings.length = n;
+
+    return meanings;
 }
