@@ -2,6 +2,7 @@ var MainController = ['$scope', '$sce', function ($scope, $sce) {
     $scope.lang = lang;
 
     lang.options.accountDescriptionHtml = $sce.trustAsHtml(lang.options.accountDescriptionHtml);
+    lang.options.baiduFanyiAPIDescriptionHtml = $sce.trustAsHtml(lang.options.baiduFanyiAPIDescriptionHtml);
     lang.options.pageTitleHtml = $sce.trustAsHtml(lang.options.pageTitleHtml);
 
     $scope.options = undefined;
