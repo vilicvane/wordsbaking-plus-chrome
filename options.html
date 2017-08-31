@@ -41,6 +41,16 @@
                 </label>
             </li>
         </ul>
+        <h3>{{lang.options.baiduTranslationAPI}}</h3>
+        <ul class="options-list">
+            <dt ng-bind-html="lang.options.baiduTranslationAPIDescriptionHtml"></dt>
+            <dd>
+                <input type="text" tabindex="1" ng-model="options.baiduTranslationAppID" placeholder="{{lang.options.baiduTranslationAppID}}" />
+            </dd>
+            <dd>
+                <input type="text" tabindex="1" ng-model="options.baiduTranslationAppSecretKey" placeholder="{{lang.options.baiduTranslationAppSecretKey}}" />
+            </dd>
+        </ul>
         <h2>{{lang.options.account}}</h2>
         <dl class="options-list">
             <dt ng-bind-html="lang.options.accountDescriptionHtml"></dt>
