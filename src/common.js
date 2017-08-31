@@ -193,6 +193,7 @@
         
         var processes = {
             baiduTrans: {
+                disabled: (options.baiduTranslationAppID &&  options.baiduTranslationAppSecretKey),
                 appID: options.baiduTranslationAppID,
                 secret: options.baiduTranslationAppSecretKey,
                 getUrl: function(query) {
@@ -329,6 +330,10 @@
         }
 
         function startProcess(process, name) {
+            if (process.disabled) {
+                return;
+            }
+
             if (name) {
                 processes[name] = process;
             }
@@ -521,7 +526,9 @@
         }
 
         for (var i = 0; i < tenses.length; i++) {
-            tenses[i].text = tenses[i].text.replace(/[^a-z]+/ig, '');
+            var tense = tenses[i].text.split('：');
+            tenses[i].labels = [tense[0]];
+            tenses[i].text = tense[1];
         }
 
         return tenses;
