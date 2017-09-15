@@ -190,10 +190,10 @@
             translation: undefined,
             bingSearchUrl: "http://www.bing.com/search?q=" + encodeURIComponent(phrase)
         };
-        
+         
         var processes = {
             baiduTrans: {
-                disabled: (options.baiduTranslationAppID &&  options.baiduTranslationAppSecretKey),
+                disabled: !(options.baiduTranslationAppID &&  options.baiduTranslationAppSecretKey),
                 appID: options.baiduTranslationAppID,
                 secret: options.baiduTranslationAppSecretKey,
                 getUrl: function(query) {
@@ -235,7 +235,7 @@
                             if (data && data.value && data.value.length) {
                                 var firstDataValue = data.value[0];
                                 var meaningGroups = firstDataValue.meaningGroups;
-                                var pronunciationAudioUrl = firstDataValue.pronunciationAudio.contentUrl;
+                                var pronunciationAudioUrl = firstDataValue.pronunciationAudio ? firstDataValue.pronunciationAudio.contentUrl : undefined;
                                 headword = firstDataValue.name;
                                 
                                 var pronunciations = extractPronunciations(meaningGroups);

@@ -48,7 +48,7 @@ var langs = {
             popupDblClick: 'Open a popup layer if a phrase is selected by double click',
             popupSelect: 'Open a popup layer when a phrase is selected',
             baiduTranslationAPI: 'Baidu Translation API',
-            baiduTranslationAPIDescriptionHtml: 'Please enter you <a href="http://wordsbaking.com" target="_blank">baidu translation API</a> account below to enable baidu translate feature.',
+            baiduTranslationAPIDescriptionHtml: 'Please enter your <a href="http://wordsbaking.com" target="_blank">baidu translation API</a> information below to enable baidu translate.',
             baiduTranslationAppID: 'APP ID',
             baiduTranslationAppSecretKey: 'Secret Key',
             account: 'WordsBaking Account',
