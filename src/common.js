@@ -20,7 +20,7 @@
         '英汉': 'zh',
         '英英': 'en'
     };
-    
+
     self.splitWords = function (str, prefix, isHtml) {
         if (isHtml) {
             str = decodeHtml(str);
@@ -190,7 +190,7 @@
             translation: undefined,
             bingSearchUrl: "http://www.bing.com/search?q=" + encodeURIComponent(phrase)
         };
-         
+
         var processes = {
             baiduTrans: {
                 disabled: !(options.baiduTranslationAppID &&  options.baiduTranslationAppSecretKey),
@@ -231,21 +231,21 @@
                         dependencies: [],
                         exec: function () {
                             var headword = '';
-                            
+
                             if (data && data.value && data.value.length) {
                                 var firstDataValue = data.value[0];
                                 var meaningGroups = firstDataValue.meaningGroups;
                                 var pronunciationAudioUrl = firstDataValue.pronunciationAudio ? firstDataValue.pronunciationAudio.contentUrl : undefined;
                                 headword = firstDataValue.name;
-                                
+
                                 var pronunciations = extractPronunciations(meaningGroups);
-                                
+
                                 result.phonetics = [];
                                 result.audio = {};
-                                
+
                                 for (var i = 0; i < pronunciations.length; i++) {
                                     var pronunciation = pronunciations[i];
-                                    
+
                                     if (pronunciation.type === 'PY') {
                                         result.phonetics.push({
                                             text: pronunciation.pron,
@@ -260,7 +260,7 @@
                                         result.audio.us = pronunciationAudioUrl;
                                     }
                                 }
-                                
+
                                 var allDefs = extractDefinitions(phrase, meaningGroups);
                                 result.definitions = allDefs.definitions;
                                 result.webDefinitions = allDefs.webDefinitions;
@@ -425,7 +425,7 @@
             var firstSpeech = meaningGroup.partsOfSpeech[0];
             var firstMeaning = meaningGroup.meanings[0];
             var description = firstSpeech.description;
-            
+
             if (definitionTypeSet.hasOwnProperty(description)) {
                 var lang = langDict[description];
                 switch (firstSpeech.name) {
@@ -449,7 +449,7 @@
                         if (!lang) {
                             lang = hasZh(firstMeaning.richDefinitions[0].fragments[0].text) ? 'zh' : 'cn';
                         }
-                        
+
                         var targetDefinitions = lang === 'zh' ? chineseDefinitions : englishDefinitions;
                         var targetPosMap = lang === 'zh' ? posMap.zh : posMap.en;
                         var pos = posDict[firstSpeech.name] || firstSpeech.name;
@@ -459,7 +459,7 @@
                             meanings = targetPosMap[pos] = [];
                             targetDefinitions.poss.push({ pos: pos, meanings: meanings })
                         }
-                        
+
                         meanings.push.apply(meanings, extractFragmentsText(firstMeaning.richDefinitions[0].fragments))
                         break;
                 }
@@ -507,7 +507,7 @@
 
     function extractTenses(meaningGroups) {
         // from Bing
-        
+
         var tenses = [];
         if (!meaningGroups) {
             return tenses;
@@ -536,7 +536,7 @@
 
     function extractSentences(meaningGroups) {
         // from Bing
-        
+
         var sentences = [];
 
         if (!meaningGroups) {
@@ -547,7 +547,7 @@
             var meaningGroup = meaningGroups[i];
             var firstMeaning = meaningGroup.meanings[0];
             var firstSpeech = meaningGroup.partsOfSpeech[0];
-            
+
             if (firstSpeech.name === '网络') {
                 continue;
             }
@@ -570,7 +570,7 @@
 
         return sentences;
     }
-   
+
     function formatSentence(text) {
         return text.replace(/\{#{1,2}\*(.+?)\*\${1,2}\}/g, '$1').replace(/\{(\d+)#(.+?)\$\1\}/g, '$2');
     }
@@ -655,9 +655,9 @@ function adjustmentDefinitionPosResult(poss) {
 
 function duplicateRemovalMeaning(meanings) {
     var meaningSet = {};
-    var n = 0; 
+    var n = 0;
 
-    outerLoop: 
+    outerLoop:
     for (var i = 0; i < meanings.length; i++) {
         var meaning = meanings[i];
 
